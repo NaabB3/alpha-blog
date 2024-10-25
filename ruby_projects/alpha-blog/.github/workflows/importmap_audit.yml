@@ -1,0 +1,24 @@
+name: Importmap Audit
+
+on: 
+  push:          # Uruchomienie przy każdym wypchnięciu
+  pull_request:  # Uruchomienie przy każdym otwarciu pull requesta
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest  # Użycie systemu Ubuntu
+
+    steps:
+      - name: Checkout code  # Pobranie kodu z repozytorium
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby  # Ustawienie środowiska Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'  # Ustal wersję Ruby, która jest używana w Twoim projekcie
+
+      - name: Set execute permissions for importmap  # Nadanie uprawnień do pliku importmap
+        run: chmod +x bin/importmap
+
+      - name: Run importmap audit  # Uruchomienie audytu
+        run: bin/importmap audit
